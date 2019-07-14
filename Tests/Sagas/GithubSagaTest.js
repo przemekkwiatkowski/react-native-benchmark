@@ -1,7 +1,7 @@
-import FixtureAPI from '../../App/Services/FixtureApi'
+import FixtureAPI from '../../app/Services/FixtureApi'
 import { put, call } from 'redux-saga/effects'
-import { getUserAvatar } from '../../App/Sagas/GithubSagas'
-import GithubActions from '../../App/Redux/GithubRedux'
+import { getUserAvatar } from '../../app/Sagas/GithubSagas'
+import GithubActions from '../../app/Redux/GithubRedux'
 import { path } from 'ramda'
 
 const stepper = (fn) => (mock) => fn.next(mock).value

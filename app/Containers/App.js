@@ -1,5 +1,5 @@
-import '../Config'
-import DebugConfig from '../Config/DebugConfig'
+import '../config'
+import DebugConfig from '../config/DebugConfig'
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import RootContainer from './RootContainer'

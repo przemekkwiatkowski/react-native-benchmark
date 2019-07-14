@@ -1,8 +1,8 @@
 import { createStore, applyMiddleware, compose } from 'redux'
-import Config from '../Config/DebugConfig'
+import Config from '../config/DebugConfig'
 import createSagaMiddleware from 'redux-saga'
 import ScreenTracking from './ScreenTrackingMiddleware'
-import { appNavigatorMiddleware } from '../Navigation/ReduxNavigation'
+import { appNavigatorMiddleware } from '../navigation/ReduxNavigation'
 
 // creates the store
 export default (rootReducer, rootSaga) => {

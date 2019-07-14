@@ -6,7 +6,7 @@ configure({ adapter: new Adapter() })
 // Mock your external modules here if needed
 jest
 .mock('react-native-i18n', () => {
-  const english = require('../App/I18n/languages/english.json')
+  const english = require('../app/I18n/languages/english.json')
   const keys = require('ramda')
   const replace = require('ramda')
   const forEach = require('ramda')
