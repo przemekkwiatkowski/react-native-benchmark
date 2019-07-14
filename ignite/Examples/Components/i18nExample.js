@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { View, Text } from 'react-native'
-import ExamplesRegistry from '../../../app/Services/ExamplesRegistry'
+import ExamplesRegistry from '../../../app/shared/services/ExamplesRegistry'
 import I18n from 'react-native-i18n'
 
 // Example
