@@ -1,5 +1,5 @@
 import '../config'
-import DebugConfig from '../config/DebugConfig'
+import DebugConfig from '../config/debugConfig'
 import React, { Component } from 'react'
 import { Text } from 'react-native';
 
