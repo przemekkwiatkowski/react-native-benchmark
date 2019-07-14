@@ -44,7 +44,8 @@
     "redux-saga": "^1.0.0",
     "reduxsauce": "1.0.1",
     "reselect": "^4.0.0",
-    "seamless-immutable": "^7.1.2"
+    "seamless-immutable": "^7.1.2",
+    "styled-components": "^4.3.2"
   },
   "devDependencies": {
     "@babel/core": "^7.5.4",
