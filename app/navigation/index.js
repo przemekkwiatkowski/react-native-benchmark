@@ -1,7 +1,12 @@
-import '../config'
-import DebugConfig from '../config/debugConfig'
-import React, { Component } from 'react'
-import { Text } from 'react-native';
+import React, { Component } from 'react';
+import { Provider } from 'react-redux';
+import RootContainer from './root.container';
+import createStore from '../modules/store';
+import DebugConfig from '../config/debug';
+import '../config';
+
+// create our store
+const store = createStore();
 
 /**
  * Provides an entry point into our application.  Both index.ios.js and index.android.js
@@ -13,14 +18,19 @@ import { Text } from 'react-native';
  * We separate like this to play nice with React Native's hot reloading.
  */
 class App extends Component {
-  render () {
+  render() {
     return (
-      <Text style={{textAlign: 'center', margin: '20%'}}>React Native Benchmark</Text>
-    )
+      <Provider store={store}>
+        <RootContainer />
+      </Provider>
+    );
   }
 }
 
 // allow reactotron overlay for fast design in dev mode
 export default DebugConfig.useReactotron
   ? console.tron.overlay(App)
-  : App
+  : App;
+
+
+
