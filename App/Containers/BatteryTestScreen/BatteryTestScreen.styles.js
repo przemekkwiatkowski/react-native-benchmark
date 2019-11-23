@@ -1,6 +1,5 @@
 import styled from 'styled-components/native';
 
-
 export const Container = styled.View`
   width: 100%;
   height: 100%;
@@ -10,25 +9,29 @@ export const Container = styled.View`
   align-items: center;
 `;
 
+export const BenchmarkContainer = styled.View`
+  width: 100%;
+  height: 85%;
+`;
+
+export const ControlsContainer = styled.View`
+  width: 100%;
+  height: 15%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  border: 1px solid grey;
+`;
+
 export const Button = styled.TouchableOpacity`
-  width: 90%;
   border-radius: 20px;
-  height: 30px;
-  margin: 20px 0;
   background-color: #50bbe2;
 `;
 
 export const ButtonText = styled.Text`
   color: white;
   text-align: center;
-  line-height: 30px;
   text-transform: uppercase;
-`;
-
-export const ButtonsContainer = styled.View`
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  padding: 5px 15px;
 `;

@@ -4,9 +4,12 @@ import React, { Component } from 'react'
 import { Provider } from 'react-redux'
 import RootContainer from './RootContainer'
 import createStore from '../Redux'
+import { initializeFirestore } from '../Services/firestore';
+
 
 // create our store
 const store = createStore()
+initializeFirestore();
 
 /**
  * Provides an entry point into our application.  Both index.ios.js and index.android.js
