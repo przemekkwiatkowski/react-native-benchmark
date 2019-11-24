@@ -34,6 +34,7 @@ const start = (state, benchmark) =>
 const stop = state =>
   state.merge({
     isActive: false,
+    samples: [],
   });
 
 const addSample = (state, desc) => {

@@ -1,4 +1,5 @@
 import styled from 'styled-components/native';
+import Video from 'react-native-video';
 
 export const Container = styled.View`
   width: 100%;
@@ -12,6 +13,10 @@ export const Container = styled.View`
 export const BenchmarkContainer = styled.View`
   width: 100%;
   height: 85%;
+  display: flex;
+  flex-flow: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const ControlsContainer = styled.View`
@@ -34,4 +39,9 @@ export const ButtonText = styled.Text`
   text-align: center;
   text-transform: uppercase;
   padding: 5px 15px;
+`;
+
+export const VideoComponent = styled(Video)`
+  width: 100%;
+  padding-bottom: 56.25%;
 `;

@@ -5,6 +5,7 @@ import com.facebook.react.ReactActivity;
       import com.facebook.react.ReactActivityDelegate;
       import com.facebook.react.ReactRootView;
       import com.swmansion.gesturehandler.react.RNGestureHandlerEnabledRootView;
+      import com.robinpowered.react.battery.DeviceBatteryPackage;  // <--- import
 
 public class MainActivity extends ReactActivity {
 
