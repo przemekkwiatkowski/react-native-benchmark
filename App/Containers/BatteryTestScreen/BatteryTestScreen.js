@@ -2,7 +2,6 @@ import React, { memo, useState, useEffect } from 'react'
 import { Text } from 'react-native';
 import PropTypes from 'prop-types';
 import DeviceBattery from 'react-native-device-battery';
-import { useKeepAwake } from 'expo-keep-awake';
 
 import VideoSource from '../../Videos/battery-test-video.mp4';
 
@@ -14,7 +13,6 @@ const BATTERY_END_LEVEL = 9;
 export const BatteryTestScreen = memo(({ stop, saveResult, addSample }) => {
   const [isCharging, setIsCharging] = useState(false);
   const [batteryStatus, setBatteryStatus] = useState(0);
-  useKeepAwake();
 
   const getBatteryPercentLevel = value => Math.round(value * 100) ;
 

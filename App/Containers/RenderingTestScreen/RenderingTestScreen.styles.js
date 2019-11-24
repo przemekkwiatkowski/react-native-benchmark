@@ -1,4 +1,16 @@
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
+
+const RowElementStyles = css`
+  height: 100%;
+  width: 20%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #F8F8FF;
+  text-align: center;
+  line-height: 80px;
+`;
 
 export const Container = styled.View`
   width: 100%;
@@ -39,19 +51,31 @@ export const ButtonText = styled.Text`
 export const Row = styled.View`
   display: flex;
   width: 100%;
-  height: 10%;
+  height: 80px;
+  flex-direction: row;
   justify-content: space-between;
   align-items: center;
+`;
 
-  * {
-    height: 100%;
-    width: 20%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: border-box;
-    border: 1px solid ghostwhite;
-    padding: 0;
-    margin: 0;
-  }
+export const RowText = styled.Text`
+  ${RowElementStyles};
+`;
+
+export const RowLink = styled.Text`
+  ${RowElementStyles};
+  text-decoration: underline;
+  color: blue;
+`;
+
+export const RowButton = styled.TouchableOpacity`
+  ${RowElementStyles};
+`;
+
+export const RowImage = styled.Image`
+  width: 20%;
+  height: 100%;
+`;
+
+export const RowInput = styled.TextInput`
+  ${RowElementStyles};
 `;

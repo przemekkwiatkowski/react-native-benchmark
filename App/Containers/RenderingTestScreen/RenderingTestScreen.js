@@ -1,22 +1,29 @@
 import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
-import { useKeepAwake } from 'expo-keep-awake';
-import { Text } from 'react-native';
+import { Text, Button as ButtonOriginal } from 'react-native';
 
+import RenderingImage from '../../Images/rendering-test-image.jpeg';
 import {
   Container,
   BenchmarkContainer,
   Button,
   ButtonText,
   ControlsContainer,
-  Row
+  Row,
+  RowText,
+  RowLink,
+  RowImage,
+  RowInput
 } from './RenderingTestScreen.styles';
+
+const ELEMENTS_MAX_NUMBER = 10000;
+const ELEMENTS_STEP_NUMBER = 500;
+const ELEMENTS_ROW_NUMBER = 5;
 
 export const RenderingTestScreen = ({ stop, saveResult, addSample }) => {
   const [elementsAmount, setElementsAmount] = useState(0);
   const scrollContainer = useRef(null);
   let interval = null;
-  useKeepAwake();
 
   const handleStop = () => stop();
   const handleSaveResult = () => saveResult();
@@ -24,18 +31,23 @@ export const RenderingTestScreen = ({ stop, saveResult, addSample }) => {
   const renderRow = number => {
     return (
       <Row key={number}>
-        <Text>abc</Text>
-        <Text>cde</Text>
-        <Text>efg</Text>
+        <RowText>{number + 1}</RowText>
+        <RowLink>Link</RowLink>
+        <ButtonOriginal title="Button" />
+        <RowImage source={RenderingImage} />
+        <RowInput value="Input" />
       </Row>
     );
   };
 
+  const handleSizeChange = (width, height) => {
+    scrollContainer.current.scrollTo({x: 0, y: height, animated: false });
+  };
+
   useEffect(() => {
-    console.log('start');
     interval = setInterval(() => {
       setElementsAmount(elementsAmount => elementsAmount + 1);
-    }, 1000);
+    }, 10);
 
     return () => {
       clearInterval(interval);
@@ -47,11 +59,12 @@ export const RenderingTestScreen = ({ stop, saveResult, addSample }) => {
       addSample('start');
     }
 
-    if (scrollContainer) {
-      console.log(scrollContainer);
-    }
-
     const multipliedElements = elementsAmount * ELEMENTS_ROW_NUMBER;
+
+    if (multipliedElements === 5) {
+      addSample('first 5 elements');
+
+    }
 
     if (multipliedElements && multipliedElements % ELEMENTS_STEP_NUMBER === 0) {
       addSample(String(multipliedElements));
@@ -66,13 +79,17 @@ export const RenderingTestScreen = ({ stop, saveResult, addSample }) => {
 
   return (
     <Container>
-      <BenchmarkContainer ref={scrollContainer}>{renderRows(elementsAmount)}</BenchmarkContainer>
+      <BenchmarkContainer ref={scrollContainer} onContentSizeChange={handleSizeChange}>
+        {renderRows(elementsAmount)}
+      </BenchmarkContainer>
       <ControlsContainer>
         <Button onPress={handleStop} >
           <ButtonText>
             stop
           </ButtonText>
         </Button>
+
+        <Text>{elementsAmount * ELEMENTS_ROW_NUMBER}</Text>
 
         <Button onPress={handleSaveResult} >
           <ButtonText>
