@@ -1,7 +1,12 @@
 import React, { memo, useState, useEffect } from 'react'
 import { Text } from 'react-native';
 import PropTypes from 'prop-types';
-import { Container, BenchmarkContainer, ControlsContainer, Button, ButtonText } from './BatteryTestScreen.styles';
+import DeviceBattery from 'react-native-device-battery';
+import { useKeepAwake } from 'expo-keep-awake';
+
+import VideoSource from '../../Videos/battery-test-video.mp4';
+
+import { Container, BenchmarkContainer, ControlsContainer, Button, ButtonText, VideoComponent } from './BatteryTestScreen.styles';
 
 const BATTERY_START_LEVEL = 99;
 const BATTERY_END_LEVEL = 9;
@@ -9,48 +14,35 @@ const BATTERY_END_LEVEL = 9;
 export const BatteryTestScreen = memo(({ stop, saveResult, addSample }) => {
   const [isCharging, setIsCharging] = useState(false);
   const [batteryStatus, setBatteryStatus] = useState(0);
-  let deviceBattery = null;
+  useKeepAwake();
 
-  const getBatteryPercentLevel = value => Math.trunc(value * 100);
+  const getBatteryPercentLevel = value => Math.round(value * 100) ;
 
-  const handleLevelChange = () => {
-    setBatteryStatus(getBatteryPercentLevel(deviceBattery.level));
+  const onBatteryStateChanged = ({ level, charging }) => {
+    const batteryLevel = getBatteryPercentLevel(level);
+    if (batteryStatus !== batteryLevel) {
+      setBatteryStatus(batteryLevel);
+    }
+    if (charging !== isCharging) {
+      setIsCharging(charging);
+    }
   };
 
-  const handleChargingChange = () => setIsCharging(deviceBattery.charging);
-
-  const requestBattery = async () => {
-    try {
-      deviceBattery = await navigator.getBattery();
-      setIsCharging(deviceBattery.charging);
-      setBatteryStatus(getBatteryPercentLevel(deviceBattery.level));
-      deviceBattery.addEventListener('levelchange', handleLevelChange);
-      deviceBattery.addEventListener('chargingchange', handleChargingChange);
-    } catch (error) {
-      alert(error);
-    }
+  const requestBattery = () => {
+    DeviceBattery.getBatteryLevel().then(level => {
+        setBatteryStatus(getBatteryPercentLevel(level));
+      }
+    );
+    DeviceBattery.isCharging().then(isCharging => {
+        setIsCharging(isCharging);
+      }
+    );
+    DeviceBattery.addListener(onBatteryStateChanged);
   };
 
   useEffect(() => {
     requestBattery();
-
-    return () => {
-      if (deviceBattery) {
-        deviceBattery.removeEventListener('chargingchange', handleChargingChange);
-        deviceBattery.removeEventListener('levelchange', handleLevelChange);
-      }
-    };
-  });
-
-  useEffect(() => {
-    if (batteryStatus === BATTERY_START_LEVEL) {
-      addSample(`start, ${BATTERY_START_LEVEL}%`);
-    } else if (batteryStatus === BATTERY_END_LEVEL) {
-      saveResult();
-    } else if (batteryStatus < BATTERY_START_LEVEL && batteryStatus > BATTERY_END_LEVEL) {
-      addSample(batteryStatus);
-    }
-  }, [batteryStatus]);
+  }, []);
 
   useEffect(() => {
     if (batteryStatus === BATTERY_START_LEVEL) {
@@ -68,6 +60,7 @@ export const BatteryTestScreen = memo(({ stop, saveResult, addSample }) => {
   return (
     <Container>
       <BenchmarkContainer>
+        <VideoComponent source={VideoSource} muted repeat resizeMode="cover" />
       </BenchmarkContainer>
       <ControlsContainer>
         <Button onPress={handleStop} >
@@ -77,7 +70,7 @@ export const BatteryTestScreen = memo(({ stop, saveResult, addSample }) => {
         </Button>
 
         <Text>charging: {isCharging ? 'true' : 'false'}</Text>
-        <Text>battery level: {batteryStatus}%</Text>
+        <Text>battery: {batteryStatus}%</Text>
 
         <Button onPress={handleSaveResult} >
           <ButtonText>
