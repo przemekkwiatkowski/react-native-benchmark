@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
+import KeepAwake from 'react-native-keep-awake';
 import { Text, Button as ButtonOriginal } from 'react-native';
-import { useKeepAwake } from 'expo-keep-awake';
 
 import RenderingImage from '../../Images/rendering-test-image.jpeg';
 import {
@@ -25,7 +25,6 @@ export const RenderingTestScreen = ({ stop, saveResult, addSample }) => {
   const [elementsAmount, setElementsAmount] = useState(0);
   const scrollContainer = useRef(null);
   let interval = null;
-  useKeepAwake();
 
   const handlePress = (e) => {
     e.preventDefault();
@@ -51,9 +50,10 @@ export const RenderingTestScreen = ({ stop, saveResult, addSample }) => {
   };
 
   useEffect(() => {
+    KeepAwake.activate();
     interval = setInterval(() => {
       setElementsAmount(elementsAmount => elementsAmount + 1);
-    }, 10);
+    }, 1000);
 
     return () => {
       clearInterval(interval);
