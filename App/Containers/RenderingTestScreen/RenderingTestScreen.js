@@ -1,26 +1,103 @@
-import React from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
+import { Text, Button as ButtonOriginal } from 'react-native';
+import { useKeepAwake } from 'expo-keep-awake';
+
+import RenderingImage from '../../Images/rendering-test-image.jpeg';
 import {
   Container,
   BenchmarkContainer,
   Button,
   ButtonText,
-  ControlsContainer
+  ControlsContainer,
+  Row,
+  RowText,
+  RowLink,
+  RowImage,
+  RowInput
 } from './RenderingTestScreen.styles';
 
+const ELEMENTS_MAX_NUMBER = 10000;
+const ELEMENTS_STEP_NUMBER = 500;
+const ELEMENTS_ROW_NUMBER = 5;
+
 export const RenderingTestScreen = ({ stop, saveResult, addSample }) => {
+  const [elementsAmount, setElementsAmount] = useState(0);
+  const scrollContainer = useRef(null);
+  let interval = null;
+  useKeepAwake();
+
+  const handlePress = (e) => {
+    e.preventDefault();
+  };
+
+  const handleStop = () => stop();
+  const handleSaveResult = () => saveResult();
+
+  const renderRow = number => {
+    return (
+      <Row key={number}>
+        <RowText>{number + 1}</RowText>
+        <RowLink>Link</RowLink>
+        <ButtonOriginal title="Button" />
+        <RowImage source={RenderingImage} />
+        <RowInput value="Input" onPress={handlePress} />
+      </Row>
+    );
+  };
+
+  const handleSizeChange = (width, height) => {
+    scrollContainer.current.scrollTo({x: 0, y: height, animated: false });
+  };
+
+  useEffect(() => {
+    interval = setInterval(() => {
+      setElementsAmount(elementsAmount => elementsAmount + 1);
+    }, 10);
+
+    return () => {
+      clearInterval(interval);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (elementsAmount === 0) {
+      addSample('start');
+    }
+
+    const multipliedElements = elementsAmount * ELEMENTS_ROW_NUMBER;
+
+    if (multipliedElements === 5) {
+      addSample('first 5 elements');
+
+    }
+
+    if (multipliedElements && multipliedElements % ELEMENTS_STEP_NUMBER === 0) {
+      addSample(String(multipliedElements));
+    }
+
+    if (multipliedElements === ELEMENTS_MAX_NUMBER) {
+      saveResult();
+    }
+  }, [elementsAmount]);
+
+  const renderRows = number => [...Array(number)].map((e, i) => renderRow(i));
+
   return (
     <Container>
-      <BenchmarkContainer>
+      <BenchmarkContainer ref={scrollContainer} onContentSizeChange={handleSizeChange}>
+        {renderRows(elementsAmount)}
       </BenchmarkContainer>
       <ControlsContainer>
-        <Button onPress={stop} >
+        <Button onPress={handleStop} >
           <ButtonText>
             stop
           </ButtonText>
         </Button>
 
-        <Button onPress={saveResult} >
+        <Text>{elementsAmount * ELEMENTS_ROW_NUMBER}</Text>
+
+        <Button onPress={handleSaveResult} >
           <ButtonText>
             save
           </ButtonText>

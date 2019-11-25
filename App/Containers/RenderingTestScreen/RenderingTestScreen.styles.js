@@ -1,5 +1,16 @@
-import styled from 'styled-components/native';
-import { View } from 'react-native';
+import styled, { css } from 'styled-components/native';
+
+const RowElementStyles = css`
+  height: 100%;
+  width: 20%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #F8F8FF;
+  text-align: center;
+  line-height: 80px;
+`;
 
 export const Container = styled.View`
   width: 100%;
@@ -10,7 +21,7 @@ export const Container = styled.View`
   align-items: center;
 `;
 
-export const BenchmarkContainer = styled.View`
+export const BenchmarkContainer = styled.ScrollView`
   width: 100%;
   height: 85%;
 `;
@@ -35,4 +46,32 @@ export const ButtonText = styled.Text`
   text-align: center;
   text-transform: uppercase;
   padding: 5px 15px;
+`;
+
+export const Row = styled.View`
+  display: flex;
+  width: 100%;
+  height: 80px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+export const RowText = styled.Text`
+  ${RowElementStyles};
+`;
+
+export const RowLink = styled.Text`
+  ${RowElementStyles};
+  text-decoration: underline;
+  color: blue;
+`;
+
+export const RowImage = styled.Image`
+  width: 20%;
+  height: 100%;
+`;
+
+export const RowInput = styled.TextInput`
+  ${RowElementStyles};
 `;
