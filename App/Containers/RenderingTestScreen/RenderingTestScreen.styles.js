@@ -45,7 +45,7 @@ export const ButtonText = styled.Text`
   color: white;
   text-align: center;
   text-transform: uppercase;
-  padding: 5px 15px;
+  padding: 10px 18px;
 `;
 
 export const Row = styled.View`
