@@ -2,6 +2,8 @@ import React, { useState, useEffect, useRef } from 'react'
 import { PermissionsAndroid } from 'react-native'
 import PropTypes from 'prop-types'
 import { Text } from 'react-native';
+import { useNetInfo } from "@react-native-community/netinfo";
+
 import {
   Container,
   BenchmarkContainer,
@@ -24,15 +26,16 @@ export const GeolocationTestScreen = ({ stop, saveResult, addSample }) => {
   const [disabled, isDisabled] = useState(false);
   const [numberOfSuccessGets, setNumberOfSuccessGets] = useState(0);
   const [allGets, setAllGets] = useState(0);
-  const [connection, setConnection] = useState(false);
+  const connectionStatus = useNetInfo();
+  const { isConnected } = connectionStatus;
   let startTime = 0;
   let endTime = 0;
-  let interval = null;
   let id = null;
 
   const options = {
     enableHighAccuracy: true,
     maximumAge: 0,
+    distanceFilter: 0,
   };
 
   const success = position => {
@@ -45,7 +48,7 @@ export const GeolocationTestScreen = ({ stop, saveResult, addSample }) => {
     setLongitude(longitude);
     setAccuracy(accuracy);
     isDisabled(false);
-    addSample(`time: ${timeConsumed} accuracy: ${accuracy} online: ${connection}`);
+    addSample(`time: ${timeConsumed} accuracy: ${accuracy} online: ${isConnected}`);
     setNumberOfSuccessGets(numberOfSuccessGets => numberOfSuccessGets + 1);
     navigator.geolocation.clearWatch(id);
   };
@@ -56,7 +59,7 @@ export const GeolocationTestScreen = ({ stop, saveResult, addSample }) => {
 
   async function requestLocationPermission() {
     try {
-      const granted = await PermissionsAndroid.request(
+      await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
           'title': 'Location Permission',
@@ -64,13 +67,8 @@ export const GeolocationTestScreen = ({ stop, saveResult, addSample }) => {
             'so we can know where you are.'
         }
       )
-      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log("You can use locations ")
-      } else {
-        console.log("Location permission denied")
-      }
     } catch (err) {
-      console.warn(err)
+      alert(err);
     }
   }
 
@@ -79,27 +77,13 @@ export const GeolocationTestScreen = ({ stop, saveResult, addSample }) => {
   const handleOnClick = () => {
     isDisabled(true);
     requestLocationPermission()
-      .then( resp => {
+      .then(resp => {
           startTime = Date.now();
           setAllGets(allGets => allGets + 1);
           getPosition();
         }
       );
   };
-
-  const handleConnectionState = () => setConnection(navigator.onLine);
-
-  useEffect(() => {
-    // setConnection(navigator.onLine);
-    // window.addEventListener('online', handleConnectionState);
-    // window.addEventListener('offline', handleConnectionState);
-    //
-    // return () => {
-    //   clearInterval(interval);
-    //   window.removeEventListener('online', handleConnectionState);
-    //   window.removeEventListener('offline', handleConnectionState);
-    // };
-  }, []);
 
   const handleStop = () => stop();
   const handleSaveResult = () => saveResult();
@@ -117,7 +101,7 @@ export const GeolocationTestScreen = ({ stop, saveResult, addSample }) => {
           <Text>Accuracy: {accuracy}</Text>
           <Text>Time: {time}</Text>
         </Cords>
-        <ConnectionStatus connection={connection}>{connection ? 'online' : 'offline'}</ConnectionStatus>
+        <ConnectionStatus connection={isConnected}>{isConnected ? 'online' : 'offline'}</ConnectionStatus>
 
       </BenchmarkContainer>
       <ControlsContainer>

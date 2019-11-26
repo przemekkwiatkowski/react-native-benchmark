@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types'
 import KeepAwake from 'react-native-keep-awake';
 import { Text, Button as ButtonOriginal } from 'react-native';
+import BackgroundTimer from 'react-native-background-timer';
 
 import RenderingImage from '../../Images/rendering-test-image.jpeg';
 import {
@@ -18,8 +19,8 @@ import {
 } from './RenderingTestScreen.styles';
 
 const DELAY_TIME = 100;
-const ELEMENTS_MAX_NUMBER = 10000;
-const ELEMENTS_STEP_NUMBER = 500;
+const ELEMENTS_MAX_NUMBER = 2000;
+const ELEMENTS_STEP_NUMBER = 200;
 const ELEMENTS_ROW_NUMBER = 5;
 
 export const RenderingTestScreen = ({ stop, saveResult, addSample }) => {
@@ -52,12 +53,12 @@ export const RenderingTestScreen = ({ stop, saveResult, addSample }) => {
 
   useEffect(() => {
     KeepAwake.activate();
-    interval = setInterval(() => {
+    interval = BackgroundTimer.setInterval(() => {
       setElementsAmount(elementsAmount => elementsAmount + 1);
     }, DELAY_TIME);
 
     return () => {
-      clearInterval(interval);
+      BackgroundTimer.clearInterval(interval);
     };
   }, []);
 

@@ -138,6 +138,8 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-community-netinfo')
+    implementation project(':react-native-background-timer')
     implementation project(':react-native-keep-awake')
     implementation project(':react-native-video')
     implementation project(':react-native-i18n')
