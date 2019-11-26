@@ -13,6 +13,10 @@ export const Container = styled.View`
 export const BenchmarkContainer = styled.View`
   width: 100%;
   height: 85%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 export const ControlsContainer = styled.View`
@@ -34,6 +38,33 @@ export const ButtonText = styled.Text`
   color: white;
   text-align: center;
   text-transform: uppercase;
-  padding: 5px 15px;
+  padding: 10px 18px;
 `;
 
+export const Clicker = styled.TouchableOpacity`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border-radius: 120px;
+  height: 120px;
+  width: 120px;
+  background-color: #ff726f;
+  opacity: ${({ disabled }) => disabled ? 0.5 : 1};
+`;
+
+export const ClickerText = styled.Text`
+  color: white;
+  text-transform: uppercase;
+`;
+
+export const Cords = styled.View`
+  display: flex;
+  flex-flow: column nowrap;
+  margin: 20px auto;
+  opacity: ${({ disabled }) => disabled ? 0.5 : 1};
+`;
+
+export const ConnectionStatus = styled.Text`
+  color: ${({ connection }) => connection ? 'darkgreen' : 'darkred'};
+`;

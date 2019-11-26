@@ -17,6 +17,7 @@ import {
   RowInput
 } from './RenderingTestScreen.styles';
 
+const DELAY_TIME = 100;
 const ELEMENTS_MAX_NUMBER = 10000;
 const ELEMENTS_STEP_NUMBER = 500;
 const ELEMENTS_ROW_NUMBER = 5;
@@ -53,7 +54,7 @@ export const RenderingTestScreen = ({ stop, saveResult, addSample }) => {
     KeepAwake.activate();
     interval = setInterval(() => {
       setElementsAmount(elementsAmount => elementsAmount + 1);
-    }, 1000);
+    }, DELAY_TIME);
 
     return () => {
       clearInterval(interval);
