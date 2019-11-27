@@ -26,6 +26,9 @@
   "dependencies": {
     "@react-native-community/netinfo": "^4.6.1",
     "apisauce": "^1.0.2",
+    "appcenter": "2.6.0",
+    "appcenter-analytics": "2.6.0",
+    "appcenter-crashes": "2.6.0",
     "firebase": "^7.5.0",
     "format-json": "^1.0.3",
     "identity-obj-proxy": "^3.0.0",
