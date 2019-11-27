@@ -13,7 +13,6 @@
     "coverage": "jest --coverage && open coverage/lcov-report/index.html || xdg-open coverage/lcov-report/index.html",
     "android:build": "cd android && ./gradlew assembleRelease",
     "android:install": "cd android && ./gradlew assembleRelease && ./gradlew installRelease",
-    "android:prebuild": "npx jetify -r",
     "android:hockeyapp": "cd android && ./gradlew assembleRelease && puck -submit=auto app/build/outputs/apk/app-release.apk",
     "android:devices": "$ANDROID_HOME/platform-tools/adb devices",
     "android:logcat": "$ANDROID_HOME/platform-tools/adb logcat *:S ReactNative:V ReactNativeJS:V",
@@ -22,11 +21,9 @@
     "lint": "standard --verbose | snazzy",
     "lintdiff": "git diff --name-only --cached --relative | grep '\\.js$' | xargs standard | snazzy",
     "fixcode": "standard --fix",
-    "git-hook": "npm run lint -s && npm run test -s",
-    "prebuild": "npx jetify -r"
+    "git-hook": "npm run lint -s && npm run test -s"
   },
   "dependencies": {
-    "@react-native-community/netinfo": "^4.6.1",
     "apisauce": "^1.0.2",
     "appcenter": "2.6.0",
     "appcenter-analytics": "2.6.0",
@@ -46,6 +43,7 @@
     "react-native-config": "^0.11.7",
     "react-native-debugger": "^1.1.0",
     "react-native-device-battery": "^2.0.0",
+    "react-native-device-info": "^5.3.1",
     "react-native-geolocation-service": "^3.1.0",
     "react-native-gesture-handler": "1.3.0",
     "react-native-i18n": "2.0.14",
