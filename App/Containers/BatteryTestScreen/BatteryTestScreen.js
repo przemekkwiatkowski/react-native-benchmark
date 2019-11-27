@@ -9,7 +9,7 @@ import VideoSource from '../../Videos/battery-test-video.mp4';
 import { Container, BenchmarkContainer, ControlsContainer, Button, ButtonText, VideoComponent } from './BatteryTestScreen.styles';
 
 const BATTERY_START_LEVEL = 99;
-const BATTERY_END_LEVEL = 9;
+const BATTERY_END_LEVEL = 49;
 
 export const BatteryTestScreen = memo(({ stop, saveResult, addSample }) => {
   const [isCharging, setIsCharging] = useState(false);

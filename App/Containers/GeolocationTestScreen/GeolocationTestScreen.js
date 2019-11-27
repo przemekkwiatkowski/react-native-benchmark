@@ -33,9 +33,9 @@ export const GeolocationTestScreen = ({ stop, saveResult, addSample }) => {
   let id = null;
 
   const options = {
-    enableHighAccuracy: true,
-    maximumAge: 0,
-    distanceFilter: 0,
+    // enableHighAccuracy: true,
+    // maximumAge: 0,
+    // distanceFilter: 0,
   };
 
   const success = position => {
