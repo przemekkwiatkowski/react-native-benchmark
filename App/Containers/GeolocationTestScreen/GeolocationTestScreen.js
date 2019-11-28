@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react'
 import { PermissionsAndroid } from 'react-native'
 import PropTypes from 'prop-types'
 import { Text } from 'react-native';
-import { useNetInfo } from "@react-native-community/netinfo";
 
 import {
   Container,
@@ -26,8 +25,8 @@ export const GeolocationTestScreen = ({ stop, saveResult, addSample }) => {
   const [disabled, isDisabled] = useState(false);
   const [numberOfSuccessGets, setNumberOfSuccessGets] = useState(0);
   const [allGets, setAllGets] = useState(0);
-  const connectionStatus = useNetInfo();
-  const { isConnected } = connectionStatus;
+  // const connectionStatus = useNetInfo();
+  const isConnected = false;
   let startTime = 0;
   let endTime = 0;
   let id = null;

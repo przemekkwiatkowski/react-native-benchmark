@@ -3,7 +3,6 @@ package com.reactnativebenchmark;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
-import com.reactnativecommunity.netinfo.NetInfoPackage;
 import com.ocetnik.timer.BackgroundTimerPackage;
 import com.corbt.keepawake.KCKeepAwakePackage;
 import com.brentvatne.react.ReactVideoPackage;
@@ -30,7 +29,6 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new NetInfoPackage(),
             new BackgroundTimerPackage(),
             new KCKeepAwakePackage(),
             new ReactVideoPackage(),
