@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { PermissionsAndroid } from 'react-native'
 import PropTypes from 'prop-types'
 import { Text } from 'react-native';
+import Geolocation from 'react-native-geolocation-service';
 
 import {
   Container,
@@ -34,7 +35,6 @@ export const GeolocationTestScreen = ({ stop, saveResult, addSample }) => {
   const options = {
     // enableHighAccuracy: true,
     // maximumAge: 0,
-    // distanceFilter: 0,
   };
 
   const success = position => {
@@ -49,7 +49,7 @@ export const GeolocationTestScreen = ({ stop, saveResult, addSample }) => {
     isDisabled(false);
     addSample(`time: ${timeConsumed} accuracy: ${accuracy} online: ${isConnected}`);
     setNumberOfSuccessGets(numberOfSuccessGets => numberOfSuccessGets + 1);
-    navigator.geolocation.clearWatch(id);
+    Geolocation.clearWatch(id);
   };
 
   const error = error => {
@@ -71,7 +71,7 @@ export const GeolocationTestScreen = ({ stop, saveResult, addSample }) => {
     }
   }
 
-  const getPosition = () => (id = navigator.geolocation.watchPosition(success, error, options));
+  const getPosition = () => (id = Geolocation.watchPosition(success, error, options));
 
   const handleOnClick = () => {
     isDisabled(true);
